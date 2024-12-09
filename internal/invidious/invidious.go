@@ -2,11 +2,11 @@ package invidious
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
+
+var invidiousInstancesUrl string = "https://api.invidious.io/instances.json?"
 
 type instance struct {
 	Name string
@@ -22,41 +22,36 @@ func New() Invidious {
 }
 
 func (inv Invidious) fetchInstances() ([]instance, error) {
-	url := "https://api.invidious.io/instances.json?pretty=1&sort_by=type,users"
-
-	resp, err := http.Get(url)
+	resp, err := http.Get(invidiousInstancesUrl)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		fmt.Println(resp.StatusCode)
+		return nil, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 
 	var instancesJson [][]json.RawMessage
 	var instances []instance
 
 	if err := json.Unmarshal([]byte(body), &instancesJson); err != nil {
-		log.Fatalf("Failed to unmarshal: %v", err)
+		return nil, err
 	}
 
 	for _, entry := range instancesJson {
 		var instance instance
 
-		// Unmarshal each part separately
 		if err := json.Unmarshal(entry[0], &instance.Name); err != nil {
-			log.Printf("Failed to parse name: %v", err)
 			continue
 		}
 
 		if err := json.Unmarshal(entry[1], &instance); err != nil {
-			log.Printf("Failed to parse instance: %v", err)
 			continue
 
 		}
