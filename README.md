@@ -28,7 +28,7 @@ Musigo is a command-line interface (CLI) application written in **Go**, designed
 ## **Installation**  
 
 **Prerequisites:**  
-- Go 1.20+ installed  
+- Go 1.22+ installed  
 - Make installed  
 
 ### **Steps:**  
