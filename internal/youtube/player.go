@@ -13,9 +13,9 @@ import (
 	"slices"
 )
 
-const playerEndpoint string = "https://music.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w&prettyPrint=true"
+// const playerEndpoint string = "https://music.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w&prettyPrint=true"
 
-// const playerEndpoint string = "https://music.youtube.com/youtubei/v1/player?prettyPrint=true"
+const playerEndpoint string = "https://music.youtube.com/youtubei/v1/player?prettyPrint=true"
 
 type playerData struct {
 	audioAdaptiveFormats []AdaptiveFormats
@@ -69,7 +69,6 @@ func (y Client) GetPlayer(ctx context.Context, videoId string) (playerData, erro
 		return playerData{}, fmt.Errorf("%v", response.Error)
 	}
 
-	// fmt.Println(string(body))
 	playerData := y.parsePlayerResponse(response)
 	return playerData, nil
 }
