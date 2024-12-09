@@ -4,6 +4,8 @@ Musigo is a command-line interface (CLI) application written in **Go**, designed
 
 ---
 
+![Musigo Showcase](assets/demo.gif)
+
 ## **Features (Current & Planned)**  
 
 ### ✅ **Currently Working:**  
